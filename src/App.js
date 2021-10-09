@@ -1,21 +1,52 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Person from './Person/Person';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+
+    state = {
+        persons: [
+            { name: 'Dennis', age:"25"},
+            { name: 'Ritchie', age:"25"},
+            { name: 'Linus', age:"25"}
+        ]
+    };
+
+    randomNumGen = () => {
+        return Math.floor(Math.random() * 30);
+    };
+
+    switchNameHandler = (newName) => {
+        this.setState(
+            { persons: [
+                {name: newName, age: this.randomNumGen()},
+                {name: 'Zax', age: this.randomNumGen()},
+                {name: 'Baldur', age: this.randomNumGen()},
+            ]
+        });
+    };
+
+    render() {
+        return (
+            <div className="App">
+            <h1>Hello, I'm React</h1>
+            <h1>But Who are you ?</h1>
+            <button onClick={() => this.switchNameHandler("Ziga")}> Or Are You ? </button>
+            <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}/>
+            <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+            click={this.switchNameHandler.bind(this, 'beatrice')}>
+                I am different because I have a hobby
+            </Person>
+            <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age}/>
+            </div>
+        );
+    };
 }
 
 export default App;
