@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Person from "./Person/Person";
 
+
 class App extends Component {
   state = {
     persons: [
@@ -36,11 +37,19 @@ class App extends Component {
   }
 
   render() {
+      const style = {
+          backgroundColor: 'white',
+          font: 'inherit',
+          border: '1px solid blue',
+          padding: '8px',
+          cursor: 'pointer'
+      };
+
     return (
       <div className="App">
         <h1>Hello, I'm React</h1>
         <h1>But Who are you ?</h1>
-        <button onClick={() => this.switchNameHandler("Ziga")}>
+        <button style={style} onClick={() => this.switchNameHandler("Ziga")}>
           Or Are You ?
         </button>
         <Person
@@ -62,7 +71,7 @@ class App extends Component {
         />
       </div>
     );
-  }
+    }
 }
 
 export default App;
