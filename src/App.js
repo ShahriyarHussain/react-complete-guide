@@ -6,9 +6,9 @@ import Person from "./Person/Person";
 class App extends Component {
   state = {
     persons: [
-      { name: "Dennis", age: "25" },
-      { name: "Ritchie", age: "25" },
-      { name: "Linus", age: "25" },
+      { id: '1', name: "Dennis", age: "25" },
+      { id: '2', name: "Ritchie", age: "25" },
+      { id: '3', name: "Linus", age: "25" },
     ],
     showPersons: false,
   };
@@ -37,6 +37,13 @@ class App extends Component {
     });
   }
 
+  deletePersonhandler = (personIndex) => {    
+    // const persons = this.state.persons.slice(); //older approach
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons});
+  }
+
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
     this.setState({showPersons: !doesShow});
@@ -51,6 +58,22 @@ class App extends Component {
           cursor: 'pointer'
       };
 
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = (        
+        <div>
+        {this.state.persons.map((person, index) => {
+          return <Person 
+            click={this.deletePersonhandler.bind(index)}
+            name={person.name} 
+            age={person.age}
+            key={index} />
+        })}        
+       </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>Hello, I'm React</h1>
@@ -58,27 +81,7 @@ class App extends Component {
         <button style={style} onClick={this.togglePersonsHandler}>
           Toggle ?
         </button>
-       { this.state.showPersons ? 
-         <div>       
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-          click={this.switchNameHandler.bind(this, "tyla")}
-          changed={this.nameChangedHandler}
-        />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, "beatrice")}
-        >
-          I am different because I have a hobby
-        </Person>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age}
-        />
-       </div> : null
-       }
+        {persons} 
       </div>
     );
     }
